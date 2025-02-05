@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Penerbit;
+use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\Request;
 
 class PenerbitController extends Controller
@@ -12,7 +13,8 @@ class PenerbitController extends Controller
      */
     public function index()
     {
-        //
+        $penerbit = Penerbit::all();
+        return view('penerbit.index', compact('penerbit'));
     }
 
     /**
@@ -20,7 +22,7 @@ class PenerbitController extends Controller
      */
     public function create()
     {
-        //
+        return view('penerbit.create');
     }
 
     /**
@@ -28,7 +30,13 @@ class PenerbitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'nama_penerbit' => 'required | max: 100',
+        ]);
+
+        Penerbit::create($validateData);
+
+        return redirect()->route('penerbit.index');
     }
 
     /**
@@ -36,7 +44,7 @@ class PenerbitController extends Controller
      */
     public function show(Penerbit $penerbit)
     {
-        //
+        return view('penerbit.show', compact('penerbit'));
     }
 
     /**
@@ -44,7 +52,7 @@ class PenerbitController extends Controller
      */
     public function edit(Penerbit $penerbit)
     {
-        //
+        return view('penerbit.edit', compact('penerbit'));
     }
 
     /**
@@ -52,7 +60,19 @@ class PenerbitController extends Controller
      */
     public function update(Request $request, Penerbit $penerbit)
     {
-        //
+        // dd($request);
+        // Validasi data yang diterima dari form
+
+        $validateData = $request->validate([
+            'nama_penerbit' => 'required|max:100',
+        ]);
+
+        // Update data Penerbit
+        $penerbit->update($validateData);
+
+        // Redirect ke halaman daftar Penerbit
+        return redirect()->route('penerbit.index');
+
     }
 
     /**
@@ -60,6 +80,7 @@ class PenerbitController extends Controller
      */
     public function destroy(Penerbit $penerbit)
     {
-        //
+        $penerbit->delete();
+        return redirect()->route('penerbit.index');
     }
 }
