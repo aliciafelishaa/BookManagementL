@@ -1,6 +1,6 @@
 @include('layout.header')
     <h3>Make Categories</h3>
-    <form action="{{route('Kategori.store')}}" method="POST">
+    <form action="{{route('kategori.store')}}" method="POST">
         @csrf
         <div class="form-group">
             <label for="">Nama Kategori:</label>

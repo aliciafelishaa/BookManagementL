@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kategori;
+use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\Request;
 
 class KategoriController extends Controller
@@ -35,7 +36,7 @@ class KategoriController extends Controller
 
         Kategori::create($validateData);
 
-        return redirect()->route('Kategori.index');
+        return redirect()->route('kategori.index');
     }
 
     /**
@@ -61,18 +62,16 @@ class KategoriController extends Controller
     {
         // dd($request);
         // Validasi data yang diterima dari form
+
         $validateData = $request->validate([
             'nama_kategori' => 'required|max:100',
         ]);
 
         // Update data kategori
-        $kategori->update([
-            'nama_kategori' => $request['nama_kategori']
-        ]);
-        // dd("success");
+        $kategori->update($validateData);
 
         // Redirect ke halaman daftar kategori
-        return redirect()->route('Kategori.index');
+        return redirect()->route('kategori.index');
 
     }
 
@@ -82,7 +81,6 @@ class KategoriController extends Controller
     public function destroy(Kategori $kategori)
     {
         $kategori->delete();
-        // return redirect()->route('Kategori.index');
-        return view('kategori.index');
+        return redirect()->route('kategori.index');
     }
 }

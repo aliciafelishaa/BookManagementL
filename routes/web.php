@@ -7,5 +7,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('Kategori', KategoriController::class);
-Route::put('/kategoriUpdate', [KategoriController::class, 'update'])->name('Kategori.update2');
+Route::resource('kategori', KategoriController::class);
+// Route::put('/kategori/{kategori}', [KategoriController::class, 'update'])->name('kategori.update2');
